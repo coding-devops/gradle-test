@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id "com.google.protobuf" version "0.9.2"
+}
+plugins {
+    id "org.sonarqube" version "4.2.0.3129"
+}
+
+group = "org.example"
+version = "1.0-SNAPSHOT"
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "test-plugin_test-plugin"
+        property "sonar.organization", "test-plugin"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
+
+subprojects {
+    apply plugin: "java"
+    ext {
+        grpcVersion = '1.51.0'
+        protobufVersion = '3.21.12'
+        springBootVersion = '2.7.8'
+        codingCommonVersion = "v2.20230302.2"
+    }
+
+    repositories {
+        maven {
+            url "https://mirrors.cloud.tencent.com/nexus/repository/maven-public/"
+        }
+        mavenCentral()
+    }
+
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
